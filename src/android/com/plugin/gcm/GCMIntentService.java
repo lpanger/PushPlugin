@@ -133,6 +133,20 @@ public class GCMIntentService extends GCMBaseIntentService {
 		}
 		
 		mNotificationManager.notify((String) appName, notId, mBuilder.build());
+		
+		// turn on the ligths
+	        String ledLight = extras.getString("led");
+	        if(ledLight != null) {
+	            mBuilder.setLights(Color.argb(0, 245, 252, 52), 5000, 5000)
+	        }
+		
+		mNotificationManager.notify((String) appName, NOTIFICATION_ID, mBuilder.build());
+	}
+	
+	public static void cancelNotification(Context context)
+	{
+		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+		mNotificationManager.cancel((String)getAppName(context), NOTIFICATION_ID);	
 	}
 	
 	private static String getAppName(Context context)
