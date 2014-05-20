@@ -9,6 +9,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -108,6 +109,14 @@ public class GCMIntentService extends GCMBaseIntentService {
 				.setContentIntent(contentIntent)
 				.setAutoCancel(true);
 
+		// Support silent notifications
+		boolean silent = Boolean.parseBoolean(extras.getString("silent", "false"));
+		if (silent) {
+      mBuilder.setDefaults(Notification.DEFAULT_LIGHTS);
+		} else {
+      mBuilder.setDefaults(Notification.DEFAULT_ALL);
+		}
+
 		String message = extras.getString("message");
 		if (message != null) {
 			mBuilder.setContentText(message);
@@ -137,7 +146,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 		// turn on the ligths
 	        String ledLight = extras.getString("led");
 	        if(ledLight != null) {
-	            mBuilder.setLights(Color.argb(0, 245, 252, 52), 5000, 5000)
+	            mBuilder.setLights(Color.argb(0, 245, 252, 52), 5000, 5000);
 	        }
 		
 		mNotificationManager.notify((String) appName, NOTIFICATION_ID, mBuilder.build());

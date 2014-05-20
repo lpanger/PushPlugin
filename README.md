@@ -1,5 +1,9 @@
 # Cordova Push Notifications Plugin for Android, iOS, WP8, Windows8, BlackBerry 10 and Amazon Fire OS
 
+## Support silent notifications
+
+This fork supports silent notifications through the "silent" option in the extras bundle.
+
 ## DESCRIPTION
 
 This plugin is for use with [Cordova](http://incubator.apache.org/cordova/), and allows your application to receive push notifications on Amazon Fire OS, Android, iOS, Windows Phone and Windows8 devices.
