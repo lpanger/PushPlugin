@@ -64,6 +64,18 @@ PushNotification.prototype.setApplicationIconBadgeNumber = function(successCallb
     cordova.exec(successCallback, errorCallback, "PushPlugin", "setApplicationIconBadgeNumber", [{badge: badge}]);
 };
 
+// https://github.com/phonegap-build/PushPlugin/issues/288#issuecomment-72121589
+PushNotification.prototype.backgroundDone = function(successCallback, errorCallback) {
+    if (errorCallback == null) { errorCallback = function() {}}
+
+    if (typeof successCallback != "function") {
+        console.log("PushNotification.backgroundDone failure: success callback parameter must be a function");
+        return
+    }
+
+     cordova.exec(successCallback, errorCallback, "PushPlugin", "didCompleteBackgroundProcess", []);
+};
+
 //-------------------------------------------------------------------
 
 if(!window.plugins) {

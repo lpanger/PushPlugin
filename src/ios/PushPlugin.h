@@ -52,4 +52,7 @@
 - (void)setNotificationMessage:(NSDictionary *)notification;
 - (void)notificationReceived;
 
+// https://github.com/phonegap-build/PushPlugin/issues/288#issuecomment-72121589
+- (void)didCompleteBackgroundProcess:(CDVInvokedUrlCommand*)command;
+
 @end

@@ -113,6 +113,12 @@
 	<!-- ios -->
 	<platform name="ios">
 
+        <config-file target="*-Info.plist" parent="UIBackgroundModes">
+            <array>
+                <string>remote-notification</string>
+            </array>
+        </config-file>
+        
 		<config-file target="config.xml" parent="/*">
 			<feature name="PushPlugin">
 				<param name="ios-package" value="PushPlugin"/>
@@ -121,9 +127,11 @@
 
 		<source-file src="src/ios/AppDelegate+notification.m" />
 		<source-file src="src/ios/PushPlugin.m" />
+		<source-file src="src/ios/VBSingleton.m" />
 
 		<header-file src="src/ios/AppDelegate+notification.h" />
 		<header-file src="src/ios/PushPlugin.h" />
+		<header-file src="src/ios/VBSingleton.h" />
 
 	</platform>
 

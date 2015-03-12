@@ -24,6 +24,7 @@
  */
 
 #import "PushPlugin.h"
+#import "VBSingleton.h"
 
 @implementation PushPlugin
 
@@ -210,7 +211,7 @@
             [jsonStr appendFormat:@"foreground:\"%d\"", 1];
             isInline = NO;
         }
-		else
+        else
             [jsonStr appendFormat:@"foreground:\"%d\"", 0];
 
         [jsonStr appendString:@"}"];
@@ -220,9 +221,14 @@
         NSString * jsCallBack = [NSString stringWithFormat:@"%@(%@);", self.callback, jsonStr];
         [self.webView stringByEvaluatingJavaScriptFromString:jsCallBack];
 
+        //get javascript function to fire in background mode
+        CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonStr];
+        [self.commandDelegate sendPluginResult:commandResult callbackId:self.callbackId];
+
         self.notificationMessage = nil;
     }
 }
+
 
 // reentrant method to drill down and surface all sub-dictionaries' key/value pairs into the top level json
 -(void)parseDictionary:(NSDictionary *)inDictionary intoJSON:(NSMutableString *)jsonString
@@ -275,6 +281,14 @@
     CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
 
     [self.commandDelegate sendPluginResult:commandResult callbackId:self.callbackId];
+}
+
+- (void)didCompleteBackgroundProcess:(CDVInvokedUrlCommand*)command {
+    NSLog(@"didCompleteBackgroundProcess called - calling background handler %lx",(unsigned long)[VBSingleton sharedInstance].backgroundHandler);
+    if ([VBSingleton sharedInstance].backgroundHandler != nil) {
+        [VBSingleton sharedInstance].backgroundHandler(UIBackgroundFetchResultNewData);
+        [VBSingleton sharedInstance].backgroundHandler = nil;
+    }
 }
 
 @end
