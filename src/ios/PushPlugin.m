@@ -26,6 +26,8 @@
 #import "PushPlugin.h"
 #import "VBSingleton.h"
 
+#define SYSTEM_VERSION_LESS_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+
 @implementation PushPlugin
 
 @synthesize notificationMessage;
