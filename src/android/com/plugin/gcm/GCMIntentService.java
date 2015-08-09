@@ -101,7 +101,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 		
 		NotificationCompat.Builder mBuilder =
 			new NotificationCompat.Builder(context)
-				.setDefaults(defaults)
 				.setSmallIcon(context.getApplicationInfo().icon)
 				.setWhen(System.currentTimeMillis())
 				.setContentTitle(extras.getString("title"))
@@ -112,9 +111,9 @@ public class GCMIntentService extends GCMBaseIntentService {
 		// Support silent notifications
 		boolean silent = Boolean.parseBoolean(extras.getString("silent", "false"));
 		if (silent) {
-      mBuilder.setDefaults(Notification.DEFAULT_LIGHTS);
+     		mBuilder.setDefaults(Notification.DEFAULT_LIGHTS);
 		} else {
-      mBuilder.setDefaults(Notification.DEFAULT_ALL);
+      		mBuilder.setDefaults(Notification.DEFAULT_ALL);
 		}
 
 		String message = extras.getString("message");
